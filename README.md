@@ -1,6 +1,6 @@
 # zhenyi-site
 
-Zhenyi 官网，为游戏和实时应用打造的三层后端生态展示页。
+Zhenyi 官网，高性能实时技术三层后端生态展示页。
 
 **官网地址**：<https://zhenyi-site.pages.dev/>
 

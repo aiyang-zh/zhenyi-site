@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Zhenyi - 为游戏和实时应用打造的三层后端生态">
-    <title>Zhenyi - 游戏与实时应用后端生态</title>
+    <meta name="description" content="Zhenyi - 高性能实时技术三层后端生态">
+    <title>Zhenyi - 高性能实时技术生态</title>
     <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="/assets/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,16 +32,181 @@
 
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background: #090a0f;
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
+        }
+
+        .bg-parallax {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+            pointer-events: none;
+            background-image:
+                radial-gradient(ellipse 100% 90% at 50% -15%, rgba(34, 211, 238, 0.12) 0%, rgba(56, 189, 248, 0.06) 25%, transparent 55%),
+                radial-gradient(ellipse 60% 80% at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+                radial-gradient(ellipse 50% 70% at 10% 60%, rgba(14, 165, 233, 0.06) 0%, transparent 40%);
+            background-position: center center;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Meteors */
+        .meteors {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .meteor {
+            position: absolute;
+            width: 120px;
+            height: 2px;
+            top: -50px;
+            left: -50px;
+            background: linear-gradient(
+                to right,
+                transparent 0%,
+                rgba(147, 197, 253, 0.5) 35%,
+                rgba(186, 230, 253, 0.7) 80%,
+                rgba(255, 255, 255, 0.85) 100%
+            );
+            transform-origin: left center;
+            animation: meteor-fall 1.6s ease-in infinite;
+            opacity: 0;
+        }
+
+        .meteor::after {
+            content: "✦";
+            position: absolute;
+            top: 50%;
+            right: -4px;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: rgba(224, 242, 254, 0.9);
+            text-shadow: 0 0 6px rgba(186,230,253,0.6), 0 0 10px rgba(147,197,253,0.4);
+        }
+
+        .meteor:nth-child(1)  { top: -30px;  left: 5%;   animation-delay: 0s;   animation-duration: 3.2s; }
+        .meteor:nth-child(2)  { top: -80px;  left: 18%;  animation-delay: 2s;  animation-duration: 3.5s; }
+        .meteor:nth-child(3)  { top: -50px;  left: 32%;  animation-delay: 4s;  animation-duration: 2.9s; }
+        .meteor:nth-child(4)  { top: -100px; left: 45%;  animation-delay: 6s;  animation-duration: 3.3s; }
+        .meteor:nth-child(5)  { top: -40px;  left: 58%;  animation-delay: 8s;  animation-duration: 3.1s; }
+        .meteor:nth-child(6)  { top: -70px;  left: 72%;  animation-delay: 10s; animation-duration: 3.6s; }
+        .meteor:nth-child(7)  { top: -90px;  left: 85%;  animation-delay: 12s; animation-duration: 3s;  }
+        .meteor:nth-child(8)  { top: -60px;  left: 12%;  animation-delay: 14s; animation-duration: 3.4s; }
+        .meteor:nth-child(9)  { top: -35px;  left: 25%;  animation-delay: 16s; animation-duration: 2.8s; }
+        .meteor:nth-child(10) { top: -95px; left: 40%;  animation-delay: 18s; animation-duration: 3.2s; }
+        .meteor:nth-child(11) { top: -55px; left: 55%;  animation-delay: 20s; animation-duration: 3.5s; }
+        .meteor:nth-child(12) { top: -75px; left: 68%;  animation-delay: 22s; animation-duration: 2.9s; }
+        .meteor:nth-child(13) { top: -45px; left: 82%;  animation-delay: 24s; animation-duration: 3.1s; }
+        .meteor:nth-child(14) { top: -110px; left: 8%;  animation-delay: 26s; animation-duration: 3.3s; }
+        .meteor:nth-child(15) { top: -65px; left: 48%;  animation-delay: 28s; animation-duration: 2.7s; }
+        .meteor:nth-child(16) { top: -85px; left: 92%;  animation-delay: 30s; animation-duration: 3.4s; }
+        .meteor:nth-child(17) { top: 15%;  left: -80px;  animation-delay: 5s;  animation-duration: 3s;  }
+        .meteor:nth-child(18) { top: 35%;  left: -100px; animation-delay: 15s; animation-duration: 2.8s; }
+        .meteor:nth-child(19) { top: 55%;  left: -90px;  animation-delay: 25s; animation-duration: 3.2s; }
+        .meteor:nth-child(20) { top: 75%;  left: -70px;  animation-delay: 35s; animation-duration: 3.1s; }
+
+        @keyframes meteor-fall {
+            0% {
+                transform: rotate(45deg) translate(0, 0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.7;
+            }
+            18% {
+                opacity: 1;
+            }
+            65% {
+                opacity: 0.9;
+            }
+            88% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: rotate(45deg) translate(740px, 0);
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .meteor { animation: none; opacity: 0; }
+        }
+
+        /* Click burst - meteor explode */
+        .click-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 0;
+            height: 0;
+        }
+
+        .burst-ray {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 2px;
+            height: 22px;
+            margin-left: -1px;
+            margin-top: -11px;
+            background: linear-gradient(
+                to top,
+                transparent 0%,
+                rgba(147, 197, 253, 0.4) 50%,
+                rgba(186, 230, 253, 0.7) 85%,
+                rgba(255, 255, 255, 0.9) 100%
+            );
+            transform-origin: center center;
+            animation: burst-ray 0.55s ease-out forwards;
+            opacity: 0;
+        }
+
+        .burst-ray:nth-child(1) { --r: 0deg;   animation-delay: 0s;   }
+        .burst-ray:nth-child(2) { --r: 60deg;  animation-delay: 0.02s;}
+        .burst-ray:nth-child(3) { --r: 120deg; animation-delay: 0.04s;}
+        .burst-ray:nth-child(4) { --r: 180deg; animation-delay: 0.02s;}
+        .burst-ray:nth-child(5) { --r: 240deg; animation-delay: 0.04s;}
+        .burst-ray:nth-child(6) { --r: 300deg; animation-delay: 0.02s;}
+
+        @keyframes burst-ray {
+            0% {
+                transform: rotate(var(--r)) scale(0);
+                opacity: 0.9;
+            }
+            35% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(var(--r)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .click-burst { display: none; }
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 24px;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
@@ -301,27 +466,58 @@
             background: var(--bg-elevated);
         }
 
-        .bench-charts {
-            display: grid;
-            gap: 48px;
+        .bench-card {
             margin-top: 32px;
-        }
-
-        .bench-chart-wrap {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .bench-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bench-tab {
+            padding: 14px 24px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .bench-tab:hover {
+            color: var(--text);
+        }
+
+        .bench-tab.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: -1px;
+        }
+
+        .bench-panel {
+            display: none;
             padding: 24px;
         }
 
-        .bench-chart-wrap h4 {
+        .bench-panel.active {
+            display: block;
+        }
+
+        .bench-panel h4 {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 20px;
             color: var(--text-muted);
         }
 
-        .bench-chart-wrap canvas {
+        .bench-panel canvas {
             max-height: 320px;
         }
 
@@ -330,6 +526,105 @@
             color: var(--text-muted);
             font-size: 0.8125rem;
             margin-top: 16px;
+        }
+
+        /* Examples */
+        .examples-section {
+            padding: 60px 0 100px;
+        }
+
+        .example-card {
+            margin-top: 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .example-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .example-tab {
+            padding: 14px 24px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .example-tab:hover {
+            color: var(--text);
+        }
+
+        .example-tab.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: -1px;
+        }
+
+        .example-panel {
+            display: none;
+            padding: 20px;
+        }
+
+        .example-panel.active {
+            display: block;
+        }
+
+        .example-panel .example-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 12px;
+        }
+
+        .example-panel .example-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .example-code-wrap {
+            position: relative;
+            background: #0d1117;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .example-code {
+            padding: 16px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: #e6edf3;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .example-copy {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .example-copy:hover {
+            background: var(--accent-hover);
         }
 
         /* Cooperation */
@@ -442,6 +737,14 @@
     </style>
 </head>
 <body>
+    <div class="bg-parallax" id="bgParallax"></div>
+    <div class="meteors" aria-hidden="true">
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+        <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+    </div>
     <header>
         <div class="container">
             <a href="/" class="logo-wrap">
@@ -449,6 +752,8 @@
                 <span class="logo-text">Zhenyi</span>
             </a>
             <nav>
+                <a href="#examples">快速上手</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/TUTORIAL.md">教程</a>
                 <a href="https://github.com/aiyang-zh/zhenyi-base">GitHub</a>
                 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
                 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/API.md">API</a>
@@ -460,7 +765,7 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>为游戏和实时应用打造的后端生态</h1>
+                <h1>为实时应用打造的高性能后端生态</h1>
                 <p class="tagline">三层架构 · MIT 基础库 · AGPL 框架 · 企业级套件，从原型到生产一站式支持</p>
                 <div class="hero-badges">
                     <span class="badge go">Go 1.24+</span>
@@ -475,6 +780,140 @@
                     </div>
                 </div>
                 <a href="https://github.com/aiyang-zh/zhenyi-base" class="btn btn-primary">查看 zhenyi-base</a>
+            </div>
+        </section>
+
+        <section class="examples-section" id="examples">
+            <div class="container">
+                <h2 class="section-title">快速上手</h2>
+                <p class="bench-env">以下示例均可直接复制运行，<code>go run main.go</code> 即可</p>
+                <div class="example-card">
+                    <div class="example-tabs">
+                        <button class="example-tab active" data-tab="0">Echo 服务器</button>
+                        <button class="example-tab" data-tab="1">无锁队列</button>
+                        <button class="example-tab" data-tab="2">泛型对象池</button>
+                    </div>
+                    <div class="example-panel active" data-panel="0">
+                        <div class="example-tag">zserver</div>
+                        <p class="example-desc">3 步启动，收到什么回什么，用 nc 或客户端即可验证</p>
+                        <div class="example-code-wrap">
+                            <pre class="example-code">package main
+
+import (
+    "fmt"
+    "github.com/aiyang-zh/zhenyi-base/zserver"
+)
+
+func main() {
+    s := zserver.New(zserver.WithAddr(":9001"))
+    s.Handle(1, func(req *zserver.Request) {
+        fmt.Printf("收到: %s\n", string(req.Data()))
+        req.Reply(1, req.Data())
+    })
+    s.Run()
+}</pre>
+                            <button class="example-copy" data-copy="package main
+
+import (
+    \"fmt\"
+    \"github.com/aiyang-zh/zhenyi-base/zserver\"
+)
+
+func main() {
+    s := zserver.New(zserver.WithAddr(\":9001\"))
+    s.Handle(1, func(req *zserver.Request) {
+        fmt.Printf(\"收到: %s\n\", string(req.Data()))
+        req.Reply(1, req.Data())
+    })
+    s.Run()
+}">复制</button>
+                        </div>
+                    </div>
+                    <div class="example-panel" data-panel="1">
+                        <div class="example-tag">zqueue · 零依赖</div>
+                        <p class="example-desc">MPSC 多生产者单消费者队列，不拉入任何第三方依赖</p>
+                        <div class="example-code-wrap">
+                            <pre class="example-code">package main
+
+import "github.com/aiyang-zh/zhenyi-base/zqueue"
+
+func main() {
+    q := zqueue.NewMPSCQueue[int](1024)
+    q.Enqueue(42)
+    q.Enqueue(100)
+    val, ok := q.Dequeue()  // 42, true
+    val2, _ := q.Dequeue()  // 100, true
+}</pre>
+                            <button class="example-copy" data-copy="package main
+
+import \"github.com/aiyang-zh/zhenyi-base/zqueue\"
+
+func main() {
+    q := zqueue.NewMPSCQueue[int](1024)
+    q.Enqueue(42)
+    q.Enqueue(100)
+    val, ok := q.Dequeue()  // 42, true
+    val2, _ := q.Dequeue()  // 100, true
+}">复制</button>
+                        </div>
+                    </div>
+                    <div class="example-panel" data-panel="2">
+                        <div class="example-tag">zpool · 零依赖</div>
+                        <p class="example-desc">按类型池化对象，减少 GC，支持任意 T</p>
+                        <div class="example-code-wrap">
+                            <pre class="example-code">package main
+
+import "github.com/aiyang-zh/zhenyi-base/zpool"
+
+type MyObject struct{ Data []byte }
+
+func main() {
+    pool := zpool.NewPool(func() *MyObject {
+        return &MyObject{Data: make([]byte, 0, 1024)}
+    })
+    obj := pool.Get()
+    defer pool.Put(obj)
+    obj.Data = append(obj.Data, 'H', 'i')
+}</pre>
+                            <button class="example-copy" data-copy="package main
+
+import \"github.com/aiyang-zh/zhenyi-base/zpool\"
+
+type MyObject struct{ Data []byte }
+
+func main() {
+    pool := zpool.NewPool(func() *MyObject {
+        return &MyObject{Data: make([]byte, 0, 1024)}
+    })
+    obj := pool.Get()
+    defer pool.Put(obj)
+    obj.Data = append(obj.Data, 'H', 'i')
+}">复制</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bench-section">
+            <div class="container">
+                <h2 class="section-title">性能基准</h2>
+                <p class="bench-env">测试环境：darwin/arm64 · Apple M3 · Go 1.24+</p>
+                <div class="bench-card">
+                    <div class="bench-tabs">
+                        <button class="bench-tab active" data-bench="0">Network Echo 压测</button>
+                        <button class="bench-tab" data-bench="1">核心组件基准</button>
+                    </div>
+                    <div class="bench-panel active" data-bench-panel="0">
+                        <h4>Network Echo 压测 (msg/s)</h4>
+                        <canvas id="chartNetwork"></canvas>
+                    </div>
+                    <div class="bench-panel" data-bench-panel="1">
+                        <h4>核心组件基准 (ns/op，越低越好)</h4>
+                        <canvas id="chartCore"></canvas>
+                    </div>
+                </div>
+                <p class="bench-env" style="margin-top:24px"><a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">查看完整数据 →</a></p>
             </div>
         </section>
 
@@ -495,24 +934,6 @@
                         <p>敬请期待</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="bench-section">
-            <div class="container">
-                <h2 class="section-title">性能基准</h2>
-                <p class="bench-env">测试环境：darwin/arm64 · Apple M3 · Go 1.24+</p>
-                <div class="bench-charts">
-                    <div class="bench-chart-wrap">
-                        <h4>Network Echo 压测 (msg/s)</h4>
-                        <canvas id="chartNetwork"></canvas>
-                    </div>
-                    <div class="bench-chart-wrap">
-                        <h4>核心组件基准 (ns/op，越低越好)</h4>
-                        <canvas id="chartCore"></canvas>
-                    </div>
-                </div>
-                <p class="bench-env" style="margin-top:24px"><a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">查看完整数据 →</a></p>
             </div>
         </section>
 
@@ -546,6 +967,7 @@
             <div class="links">
                 <a href="https://github.com/aiyang-zh/zhenyi-base">zhenyi-base</a>
                 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/juejin/zhenyi-base-intro.md">文章</a>
                 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/SECURITY.md">安全</a>
             </div>
             <p>Zhenyi · 让后端开发更简单</p>
@@ -555,19 +977,70 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
+        var bg = document.getElementById("bgParallax");
+        if (bg && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            document.addEventListener("mousemove", function(e) {
+                var x = (e.clientX / window.innerWidth - 0.5) * 20;
+                var y = (e.clientY / window.innerHeight - 0.5) * 20;
+                bg.style.transform = "translate(" + x + "px, " + y + "px)";
+            });
+        }
+        document.addEventListener("click", function(e) {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            var b = document.createElement("div");
+            b.className = "click-burst";
+            b.style.left = e.clientX + "px";
+            b.style.top = e.clientY + "px";
+            b.style.transform = "translate(-50%, -50%)";
+            for (var i = 0; i < 6; i++) b.appendChild(document.createElement("div")).className = "burst-ray";
+            document.body.appendChild(b);
+            setTimeout(function() { b.remove(); }, 600);
+        });
+        document.querySelectorAll(".example-tab").forEach(function(tab) {
+            tab.addEventListener("click", function() {
+                var id = this.getAttribute("data-tab");
+                document.querySelectorAll(".example-tab").forEach(function(t) { t.classList.remove("active"); });
+                document.querySelectorAll(".example-panel").forEach(function(p) { p.classList.remove("active"); });
+                this.classList.add("active");
+                var panel = document.querySelector(".example-panel[data-panel=\"" + id + "\"]");
+                if (panel) panel.classList.add("active");
+            });
+        });
+        document.querySelectorAll(".example-copy").forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                var code = this.getAttribute("data-copy");
+                if (code && navigator.clipboard) {
+                    navigator.clipboard.writeText(code).then(function() {
+                        btn.textContent = "已复制";
+                        setTimeout(function() { btn.textContent = "复制"; }, 1200);
+                    });
+                }
+            });
+        });
+        document.querySelectorAll(".bench-tab").forEach(function(tab) {
+            tab.addEventListener("click", function() {
+                var id = this.getAttribute("data-bench");
+                document.querySelectorAll(".bench-tab").forEach(function(t) { t.classList.remove("active"); });
+                document.querySelectorAll(".bench-panel").forEach(function(p) { p.classList.remove("active"); });
+                this.classList.add("active");
+                var panel = document.querySelector(".bench-panel[data-bench-panel=\"" + id + "\"]");
+                if (panel) panel.classList.add("active");
+                if (id === "0" && window.chartNetwork) window.chartNetwork.resize();
+                if (id === "1" && window.chartCore) window.chartCore.resize();
+            });
+        });
         const gridColor = "rgba(33, 38, 45, 0.8)";
         const textColor = "#8b949e";
         Chart.defaults.color = textColor;
         Chart.defaults.borderColor = gridColor;
 
-        new Chart(document.getElementById("chartNetwork"), {
+        window.chartNetwork = new Chart(document.getElementById("chartNetwork"), {
             type: "bar",
             data: {
                 labels: ["23B/20c", "1KB/20c", "23B/100c", "23B/1000c", "1KB/1000c"],
                 datasets: [
                     { label: "TCP", data: [715147, 401744, 696507, 778365, 257721], backgroundColor: "rgba(0, 173, 216, 0.7)" },
-                    { label: "WebSocket", data: [657616, 675725, 546951, 715972, 160539], backgroundColor: "rgba(249, 115, 22, 0.7)" },
-                    { label: "KCP", data: [33332, 31604, 50940, 27419, 11715], backgroundColor: "rgba(34, 197, 94, 0.7)" }
+                    { label: "WebSocket", data: [657616, 675725, 546951, 715972, 160539], backgroundColor: "rgba(249, 115, 22, 0.7)" }
                 ]
             },
             options: {
@@ -577,7 +1050,7 @@
             }
         });
 
-        new Chart(document.getElementById("chartCore"), {
+        window.chartCore = new Chart(document.getElementById("chartCore"), {
             type: "bar",
             data: {
                 labels: ["错误哨兵", "批处理", "对象池", "SPSC", "MPSC"],
