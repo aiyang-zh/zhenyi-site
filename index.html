@@ -1,37 +1,534 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhenyi</title>
+    <meta name="description" content="Zhenyi - 为游戏和实时应用打造的三层后端生态">
+    <title>Zhenyi - 游戏与实时应用后端生态</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 50px auto; padding: 0 20px; line-height: 1.6; }
-        h1 { color: #333; }
-        .layers { margin-top: 30px; }
-        .layer { margin-bottom: 20px; }
-        .layer h2 { margin-bottom: 5px; color: #555; }
+        :root {
+            --bg: #0a0e14;
+            --bg-elevated: #12171f;
+            --bg-card: #161c26;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #f97316;
+            --accent-hover: #ea580c;
+            --border: #21262d;
+            --success: #22c55e;
+            --warning: #eab308;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 14, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-wrap img {
+            height: 36px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 140px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .badge.go { color: #00ADD8; }
+        .badge.mit { color: var(--success); }
+
+        /* Layers */
+        .layers-section {
+            padding: 60px 0 100px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 48px;
+            color: var(--text);
+        }
+
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .layer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .layer-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .layer-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-card .license {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .layer-card .license.mit {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .layer-card .license.agpl {
+            background: rgba(234, 179, 8, 0.15);
+            color: var(--warning);
+        }
+
+        .layer-card .license.commercial {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--accent);
+        }
+
+        .layer-card p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Benchmark */
+        .bench-section {
+            padding: 60px 0 100px;
+            background: var(--bg-elevated);
+        }
+
+        .bench-charts {
+            display: grid;
+            gap: 48px;
+            margin-top: 32px;
+        }
+
+        .bench-chart-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .bench-chart-wrap h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .bench-chart-wrap canvas {
+            max-height: 320px;
+        }
+
+        .bench-env {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+            margin-top: 16px;
+        }
+
+        /* Cooperation */
+        .coop-section {
+            padding: 60px 0 100px;
+            background: var(--bg-elevated);
+        }
+
+        .coop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .coop-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .coop-card:hover {
+            border-color: var(--accent);
+        }
+
+        .coop-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .coop-card p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .coop-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        .coop-card a:hover {
+            text-decoration: underline;
+        }
+
+        .bench-section .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        .bench-section .bench-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer .links {
+            display: flex;
+            gap: 24px;
+        }
+
+        footer .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        footer .links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>（Zhenyi）</h1>
-    <p>为游戏和实时应用打造的三层后端生态</p>
+    <header>
+        <div class="container">
+            <a href="/" class="logo-wrap">
+                <img src="assets/logo.png" alt="Zhenyi">
+                <span class="logo-text">Zhenyi</span>
+            </a>
+            <nav>
+                <a href="https://github.com/aiyang-zh/zhenyi-base">GitHub</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/API.md">API</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base" class="btn btn-primary">开始使用</a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="layers">
-        <div class="layer">
-            <h2>🔹 MIT 基础工具库</h2>
-            <p>高性能、无依赖的工具集（队列、对象池、网络、日志等）</p>
-        </div>
-        <div class="layer">
-            <h2>🔸 AGPL 应用框架</h2>
-            <p>Actor 模型、脚本引擎（JS/TS）、服务发现、网关 – 双授权，企业可商用</p>
-        </div>
-        <div class="layer">
-            <h2>🔹 商业企业套件</h2>
-            <p>脏标记同步、代码生成、监控、数据库适配 – 闭源增值功能</p>
-        </div>
-    </div>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>为游戏和实时应用打造的后端生态</h1>
+                <p class="tagline">三层架构 · MIT 基础库 · AGPL 框架 · 企业级套件，从原型到生产一站式支持</p>
+                <div class="hero-badges">
+                    <span class="badge go">Go 1.24+</span>
+                    <span class="badge mit">MIT License</span>
+                    <span class="badge">零分配 · 无锁</span>
+                </div>
+                <a href="https://github.com/aiyang-zh/zhenyi-base" class="btn btn-primary">查看 zhenyi-base</a>
+            </div>
+        </section>
 
-    <hr>
-    <p style="color: #777;">Zhenyi · 让后端开发更简单</p>
+        <section class="layers-section">
+            <div class="container">
+                <h2 class="section-title">三层生态</h2>
+                <div class="layers-grid">
+                    <div class="layer-card">
+                        <h3><span class="license mit">MIT</span> 基础工具库</h3>
+                        <p>高性能、无依赖的工具集：无锁队列、对象池、网络核心、日志、序列化等。按需引入，只编译你用到的包。</p>
+                    </div>
+                    <div class="layer-card">
+                        <h3><span class="license agpl">AGPL</span> 应用框架</h3>
+                        <p>敬请期待</p>
+                    </div>
+                    <div class="layer-card">
+                        <h3><span class="license commercial">商业</span> 企业套件</h3>
+                        <p>敬请期待</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bench-section">
+            <div class="container">
+                <h2 class="section-title">性能基准</h2>
+                <p class="bench-env">测试环境：darwin/arm64 · Apple M3 · Go 1.24+</p>
+                <div class="bench-charts">
+                    <div class="bench-chart-wrap">
+                        <h4>Network Echo 压测 (msg/s)</h4>
+                        <canvas id="chartNetwork"></canvas>
+                    </div>
+                    <div class="bench-chart-wrap">
+                        <h4>核心组件基准 (ns/op，越低越好)</h4>
+                        <canvas id="chartCore"></canvas>
+                    </div>
+                </div>
+                <p class="bench-env" style="margin-top:24px"><a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">查看完整数据 →</a></p>
+            </div>
+        </section>
+
+        <section class="coop-section">
+            <div class="container">
+                <h2 class="section-title">合作方式</h2>
+                <div class="coop-grid">
+                    <div class="coop-card">
+                        <h4>开源贡献</h4>
+                        <p>欢迎通过 GitHub 提交 Issue、PR，参与文档完善、Bug 修复或新功能开发。</p>
+                        <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/CONTRIBUTING.md">贡献指南 →</a>
+                    </div>
+                    <div class="coop-card">
+                        <h4>商业合作</h4>
+                        <p>企业授权、定制开发、技术咨询等合作需求，欢迎来信洽谈。</p>
+                        <a href="mailto:1093993119@qq.com">联系我们 →</a>
+                    </div>
+                    <div class="coop-card">
+                        <h4>安全反馈</h4>
+                        <p>如发现安全漏洞，请通过邮件私下反馈，我们会及时响应处理。</p>
+                        <a href="mailto:1093993119@qq.com">安全报告 →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="links">
+                <a href="https://github.com/aiyang-zh/zhenyi-base">zhenyi-base</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/SECURITY.md">安全</a>
+            </div>
+            <p>Zhenyi · 让后端开发更简单</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const gridColor = "rgba(33, 38, 45, 0.8)";
+        const textColor = "#8b949e";
+        Chart.defaults.color = textColor;
+        Chart.defaults.borderColor = gridColor;
+
+        new Chart(document.getElementById("chartNetwork"), {
+            type: "bar",
+            data: {
+                labels: ["23B/20c", "1KB/20c", "23B/100c", "23B/1000c", "1KB/1000c"],
+                datasets: [
+                    { label: "TCP", data: [715147, 401744, 696507, 778365, 257721], backgroundColor: "rgba(0, 173, 216, 0.7)" },
+                    { label: "WebSocket", data: [657616, 675725, 546951, 715972, 160539], backgroundColor: "rgba(249, 115, 22, 0.7)" },
+                    { label: "KCP", data: [33332, 31604, 50940, 27419, 11715], backgroundColor: "rgba(34, 197, 94, 0.7)" }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: "top" } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        new Chart(document.getElementById("chartCore"), {
+            type: "bar",
+            data: {
+                labels: ["错误哨兵", "批处理", "对象池", "SPSC", "MPSC"],
+                datasets: [{ label: "ns/op (越低越好)", data: [0.41, 1.4, 7.9, 15.2, 16.7], backgroundColor: "rgba(249, 115, 22, 0.6)" }]
+            },
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true } }
+            }
+        });
+    });
+    </script>
 </body>
 </html>
