@@ -172,6 +172,59 @@
         .badge.go { color: #00ADD8; }
         .badge.mit { color: var(--success); }
 
+        /* Install block */
+        .hero-install {
+            margin: 32px 0 36px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .install-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .install-code {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+        }
+
+        .install-code code {
+            flex: 1;
+            color: var(--text);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .install-copy {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .install-copy:hover {
+            background: var(--accent-hover);
+        }
+
         /* Layers */
         .layers-section {
             padding: 60px 0 100px;
@@ -413,6 +466,13 @@
                     <span class="badge go">Go 1.24+</span>
                     <span class="badge mit">MIT License</span>
                     <span class="badge">零分配 · 无锁</span>
+                </div>
+                <div class="hero-install">
+                    <div class="install-label">一键安装</div>
+                    <div class="install-code">
+                        <code>go get github.com/aiyang-zh/zhenyi-base</code>
+                        <button class="install-copy" onclick="var b=this;navigator.clipboard.writeText('go get github.com/aiyang-zh/zhenyi-base').then(function(){b.textContent='已复制';setTimeout(function(){b.textContent='复制';},1500)})">复制</button>
+                    </div>
                 </div>
                 <a href="https://github.com/aiyang-zh/zhenyi-base" class="btn btn-primary">查看 zhenyi-base</a>
             </div>
