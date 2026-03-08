@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zhenyi 技术专栏 - 掘金、知乎、公众号">
+    <title>技术专栏 - Zhenyi</title>
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --bg-elevated: #12171f;
+            --bg-card: #161c26;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #f97316;
+            --accent-hover: #ea580c;
+            --border: #21262d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #090a0f; color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(10, 14, 20, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        header .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+        .logo-wrap img { height: 36px; width: auto; }
+        .logo-text { font-weight: 700; font-size: 1.25rem; }
+        nav { display: flex; align-items: center; gap: 32px; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9375rem; font-weight: 500; transition: color 0.2s; }
+        nav a:hover { color: var(--text); }
+        .btn-primary { display: inline-flex; padding: 10px 20px; font-size: 0.9375rem; font-weight: 600; border-radius: 8px; background: var(--accent); color: #fff; text-decoration: none; transition: all 0.2s; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        main { padding: 120px 0 80px; position: relative; z-index: 1; }
+        .page-title { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+        .page-desc { color: var(--text-muted); margin-bottom: 48px; font-size: 1rem; }
+        .articles-grid { display: grid; gap: 24px; }
+        .article-card {
+            display: block; text-decoration: none; color: inherit;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .article-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .article-card .platform { font-size: 0.8125rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .article-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .article-card p { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.6; }
+        .article-card .go { margin-top: 16px; font-size: 0.875rem; color: var(--accent); font-weight: 500; }
+        /* Tabs */
+        .article-tabs { display: flex; gap: 8px; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
+        .article-tab { padding: 12px 20px; font-size: 0.9375rem; font-weight: 500; color: var(--text-muted); background: transparent; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; font-family: inherit; transition: color 0.2s, border-color 0.2s; }
+        .article-tab:hover { color: var(--text); }
+        .article-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .article-panel { display: none; }
+        .article-panel.active { display: block; }
+        .article-panel .empty { color: var(--text-muted); font-size: 0.9375rem; padding: 48px 24px; text-align: center; }
+        footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 60px; }
+        footer .links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px; }
+        footer a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; }
+        footer a:hover { color: var(--accent); }
+        footer p { color: var(--text-muted); font-size: 0.8125rem; }
+        @media (max-width: 600px) { nav { gap: 20px; } nav a { font-size: 0.875rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo-wrap">
+                <img src="assets/logo.png" alt="Zhenyi">
+                <span class="logo-text">Zhenyi</span>
+            </a>
+            <nav>
+                <a href="/#examples">快速上手</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
+                <a href="/articles.html">技术专栏</a>
+                <a href="https://pkg.go.dev/github.com/aiyang-zh/zhenyi-base">API</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base">GitHub</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base" class="btn-primary">开始使用</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">技术专栏</h1>
+            <p class="page-desc">按平台分类，点击直达对应站点阅读。</p>
+            <div class="article-tabs">
+                <button class="article-tab active" data-tab="juejin">掘金</button>
+                <button class="article-tab" data-tab="zhihu">知乎</button>
+                <button class="article-tab" data-tab="wechat">公众号</button>
+            </div>
+            <div class="article-panel active" data-panel="juejin">
+                <div class="articles-grid">
+                    <a class="article-card" href="https://juejin.cn/post/7614110147108913192" target="_blank" rel="noopener">
+                        <span class="platform">MIT 基础库</span>
+                        <h3>开源首发：TCP 77万 QPS，无锁队列 16ns/op，按需引入</h3>
+                        <p>zhenyi-base 项目介绍、核心能力、压测数据与使用示例。</p>
+                        <span class="go">去掘金阅读 →</span>
+                    </a>
+                </div>
+            </div>
+            <div class="article-panel" data-panel="zhihu">
+                <div class="articles-grid">
+                    <a class="article-card" href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/zhihu/zhenyi-base-intro.md" target="_blank" rel="noopener">
+                        <span class="platform">MIT 基础库</span>
+                        <h3>开源一个 Go 高性能基础库：TCP 77万 QPS，无锁队列 16ns/op</h3>
+                        <p>面向知乎读者的 zhenyi-base 介绍与适用场景。</p>
+                        <span class="go">去知乎阅读 →</span>
+                    </a>
+                </div>
+            </div>
+            <div class="article-panel" data-panel="wechat">
+                <div class="articles-grid">
+                    <a class="article-card" href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/wechat/zhenyi-base-intro.md" target="_blank" rel="noopener">
+                        <span class="platform">MIT 基础库</span>
+                        <h3>开源一个 Go 高性能基础库：77万 QPS、16ns 无锁队列</h3>
+                        <p>公众号精简版，微信内搜索公众号名称亦可阅读。</p>
+                        <span class="go">查看原文（GitHub）→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="links">
+                <a href="https://github.com/aiyang-zh/zhenyi-base">zhenyi-base</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/README.md">文档</a>
+                <a href="/articles.html">技术专栏</a>
+                <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/SECURITY.md">安全</a>
+            </div>
+            <p>Zhenyi · 让后端开发更简单</p>
+        </div>
+    </footer>
+    <script>
+    document.querySelectorAll(".article-tab").forEach(function(tab) {
+        tab.addEventListener("click", function() {
+            var id = this.getAttribute("data-tab");
+            document.querySelectorAll(".article-tab").forEach(function(t) { t.classList.remove("active"); });
+            document.querySelectorAll(".article-panel").forEach(function(p) { p.classList.remove("active"); });
+            this.classList.add("active");
+            document.querySelector(".article-panel[data-panel=\"" + id + "\"]").classList.add("active");
+        });
+    });
+    </script>
+</body>
+</html>
