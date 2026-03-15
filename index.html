@@ -920,6 +920,7 @@ func main() {
                     <div class="bench-tabs">
                         <button class="bench-tab active" data-bench="0">Network Echo 压测</button>
                         <button class="bench-tab" data-bench="1">核心组件基准</button>
+                        <button class="bench-tab" data-bench="2">zqueue vs Channel</button>
                     </div>
                     <div class="bench-panel active" data-bench-panel="0">
                         <h4>Network Echo 压测 (msg/s)</h4>
@@ -929,8 +930,13 @@ func main() {
                         <h4>核心组件基准 (ns/op，越低越好)</h4>
                         <canvas id="chartCore"></canvas>
                     </div>
+                    <div class="bench-panel" data-bench-panel="2">
+                        <h4>zqueue vs Channel：生产者数量对延迟的影响 (Medium 4096B, Batch)</h4>
+                        <canvas id="chartZqueue"></canvas>
+                        <p class="bench-note">数据与 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/wechat/zqueue-deep-dive.md" style="color:var(--accent)">zqueue-deep-dive</a> 一致。复现：<code>go test -bench=BenchmarkMatrix -benchmem ./zqueue/</code></p>
+                    </div>
                 </div>
-                <p class="bench-env" style="margin-top:24px"><a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">查看完整数据 →</a></p>
+                <p class="bench-env" style="margin-top:24px"><a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">核心指标</a> · <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/benchmark/zqueue_matrix_results.txt" style="color:var(--accent)">zqueue 96 组基准原始数据</a></p>
             </div>
         </section>
 
@@ -1046,6 +1052,7 @@ func main() {
                 if (panel) panel.classList.add("active");
                 if (id === "0" && window.chartNetwork) window.chartNetwork.resize();
                 if (id === "1" && window.chartCore) window.chartCore.resize();
+                if (id === "2" && window.chartZqueue) window.chartZqueue.resize();
             });
         });
         const gridColor = "rgba(33, 38, 45, 0.8)";
@@ -1082,6 +1089,66 @@ func main() {
                 scales: { x: { beginAtZero: true } }
             }
         });
+
+        // zqueue vs Channel：从 zqueue_matrix_results.txt 解析真实数据 (Medium/Batch)
+        (function() {
+            var fallback = {
+                labels: ["P1", "P4", "P16", "P64"],
+                mpsc: [17.79, 23.06, 23.90, 31.24],
+                unbound: [132.5, 159.4, 239.4, 215.1],
+                chanBuf: [58.39, 82.57, 124.9, 182.8],
+                chanUnbuf: [219.3, 446.5, 481.9, 563.6]
+            };
+            var parseNs = function(line) {
+                var m = line.match(/(\d+\.?\d*)\s+ns\/op/);
+                return m ? parseFloat(m[1]) : null;
+            };
+            var extract = function(text) {
+                var lines = text.split("\n");
+                var p = { MPSCBounded: {}, MPSCUnbounded: {}, ChanBuffered: {}, ChanUnbuffered: {} };
+                var re = /BenchmarkMatrix\/(\w+)\/(\w+)\/(P\d+)\/(Single|Batch)/;
+                lines.forEach(function(line) {
+                    var match = line.match(re);
+                    if (!match || match[2] !== "Medium" || match[4] !== "Batch") return;
+                    var ns = parseNs(line);
+                    if (ns == null) return;
+                    var key = match[1], prod = match[3];
+                    if (!p[key][prod]) p[key][prod] = ns;
+                });
+                var order = ["P1","P4","P16","P64"];
+                return {
+                    mpsc: order.map(function(x){ return p.MPSCBounded[x]; }),
+                    unbound: order.map(function(x){ return p.MPSCUnbounded[x]; }),
+                    chanBuf: order.map(function(x){ return p.ChanBuffered[x]; }),
+                    chanUnbuf: order.map(function(x){ return p.ChanUnbuffered[x]; })
+                };
+            };
+            var render = function(d) {
+                var valid = d.mpsc && d.mpsc.every(Number.isFinite);
+                if (!valid) d = fallback;
+                window.chartZqueue = new Chart(document.getElementById("chartZqueue"), {
+                    type: "bar",
+                    data: {
+                        labels: ["P1","P4","P16","P64"],
+                        datasets: [
+                            { label: "MPSC 有界", data: d.mpsc, backgroundColor: "rgba(34, 197, 94, 0.7)" },
+                            { label: "MPSC 无界", data: d.unbound, backgroundColor: "rgba(56, 189, 248, 0.7)" },
+                            { label: "Chan 有缓冲", data: d.chanBuf, backgroundColor: "rgba(249, 115, 22, 0.7)" },
+                            { label: "Chan 无缓冲", data: d.chanUnbuf, backgroundColor: "rgba(139, 92, 246, 0.6)" }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: "top" } },
+                        scales: { y: { beginAtZero: true, title: { display: true, text: "ns/op" } }, x: { title: { display: true, text: "生产者数量" } } }
+                    }
+                });
+            };
+            fetch("https://raw.githubusercontent.com/aiyang-zh/zhenyi-base/main/docs/benchmark/zqueue_matrix_results.txt")
+                .then(function(r){ return r.text(); })
+                .then(function(t){ render(extract(t)); })
+                .catch(function(){ render(fallback); });
+        })();
     });
     </script>
 </body>
