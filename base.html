@@ -1075,7 +1075,7 @@ func main() {
                     <div class="bench-panel" data-bench-panel="2">
                         <h4>zqueue vs Channel：生产者数量对延迟的影响 (Medium 4096B, Batch)</h4>
                         <canvas id="chartZqueue"></canvas>
-                        <p class="bench-note">数据与 <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/wechat/zqueue-deep-dive.md" style="color:var(--accent)">zqueue-deep-dive</a> 一致。复现：<code>go test -bench=BenchmarkMatrix -benchmem ./zqueue/</code></p>
+                        <p class="bench-note">数据与 <a href="https://github.com/aiyang-zh/zhenyi-site/blob/main/docs/promo/wechat/zqueue-deep-dive.md" style="color:var(--accent)">zqueue-deep-dive</a> 一致。复现：<code>go test -bench=BenchmarkMatrix -benchmem ./zqueue/</code></p>
                     </div>
                 </div>
                 <p class="bench-env" style="margin-top:24px">底层性能数据来自 zhenyi-base：<a href="https://github.com/aiyang-zh/zhenyi-base#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87" style="color:var(--accent)">核心指标</a> · <a href="https://github.com/aiyang-zh/zhenyi-base/blob/main/docs/benchmark/zqueue_matrix_results.txt" style="color:var(--accent)">zqueue 96 组基准原始数据</a></p>

@@ -13,6 +13,7 @@ Zhenyi 对外官网（静态页）：首页突出 **Zhenyi 主项目**；**zheny
 - **图书**：官网在线阅读 <https://zhenyi-site.pages.dev/book/>；源码书稿 [Go Actor 模型与实时应用](https://github.com/aiyang-zh/zhenyi/blob/main/docs/books/go-actor-realtime/README.md)（导航与页脚「图书」→ `/book/`）
 - **信创**：指向 zhenyi 仓库 [docs/XINCHUANG.md](https://github.com/aiyang-zh/zhenyi/blob/main/docs/XINCHUANG.md)
 - **合作与安全**：贡献、商务、安全披露入口
+- **渠道推广底稿**：[`docs/promo/`](docs/promo/README.md)（掘金 / 知乎 / 微信等 Markdown，与 **zhenyi + zhenyi-base** 同一生态）
 
 ## 本地预览
 
