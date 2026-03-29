@@ -1,0 +1,31 @@
+{
+  "name": "zhenyi-site",
+  "version": "1.0.0",
+  "description": "Zhenyi 对外官网（静态页）：首页突出 **Zhenyi 主项目**；**zhenyi-base** 的安装、示例与压测见二级页 [`base.html`](base.html)。少堆内部术语，细节链到仓库文档。",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "bash scripts/build-book.sh",
+    "build:book": "honkit build \"${BOOK_SRC:-../zhenyi/docs/books/go-actor-realtime}\" ./book",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiyang-zh/zhenyi-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aiyang-zh/zhenyi-site/issues"
+  },
+  "homepage": "https://github.com/aiyang-zh/zhenyi-site#readme",
+  "devDependencies": {
+    "gitbook-plugin-anchor-navigation-ex": "^1.0.14",
+    "gitbook-plugin-expandable-chapters-small": "^0.1.7",
+    "gitbook-plugin-search-plus": "^1.0.4-alpha-3",
+    "honkit": "^5.1.5"
+  }
+}

@@ -1,0 +1,56 @@
+# 推送 main 时：检出 zhenyi 书稿 + 构建 book/，并部署到 Cloudflare Pages。
+# 需在仓库 Secrets 配置：CLOUDFLARE_API_TOKEN、CLOUDFLARE_ACCOUNT_ID。
+# 若 Pages 项目已绑定同一仓库并开启“自动构建”，请二选一，避免重复部署：
+#   - 仅用本 workflow：在 Cloudflare 控制台关闭该项目的 Git 构建，或断开重复连接；或
+#   - 仅用 Cloudflare 自带构建：删除本文件，在 Pages 构建命令填 npm ci && npm run build。
+
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Checkout zhenyi-site
+        uses: actions/checkout@v4
+
+      - name: Checkout zhenyi (book source)
+        uses: actions/checkout@v4
+        with:
+          repository: aiyang-zh/zhenyi
+          path: zhenyi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build book (HonKit)
+        env:
+          BOOK_SRC: ${{ github.workspace }}/zhenyi/docs/books/go-actor-realtime
+        run: npm run build:book
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: zhenyi-site
+          directory: .
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
