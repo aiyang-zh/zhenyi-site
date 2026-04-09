@@ -7,6 +7,7 @@
 | 文章 | 说明 |
 |------|------|
 | [首发推广.md](首发推广.md) | zhenyi 生态首次开源 |
+| [collab-whiteboard-demo.md](collab-whiteboard-demo.md) | 一个 main.go，怎么把协作白板做对？ |
 
 ## zhenyi-base 基础库
 

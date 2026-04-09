@@ -752,6 +752,112 @@
             background: var(--accent-hover);
         }
 
+        /* Demo Showcase */
+        .demos-section {
+            padding: 60px 0 100px;
+            background: linear-gradient(180deg, transparent 0%, rgba(18, 23, 31, 0.55) 35%, transparent 100%);
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .demo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .demo-card:hover {
+            border-color: rgba(249, 115, 22, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .demo-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0d1117;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .demo-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .demo-body {
+            padding: 18px 18px 16px;
+        }
+
+        .demo-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .demo-title h3 {
+            font-size: 1.05rem;
+            font-weight: 650;
+            color: var(--text);
+        }
+
+        .demo-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        .demo-desc {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .demo-cmd {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: #e6edf3;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .demo-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .demo-actions a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .demo-actions a:hover {
+            text-decoration: underline;
+        }
+
         /* Cooperation */
         .coop-section {
             padding: 60px 0 100px;
@@ -878,6 +984,7 @@
             </a>
             <nav>
                 <a href="#solution">产品分层</a>
+                <a href="#demos">Demo 演示</a>
                 <a href="/base.html">基础库</a>
                 <a href="https://github.com/aiyang-zh/zhenyi/blob/main/docs/DOCS_INDEX.md">文档</a>
                 <a href="/book/">图书</a>
@@ -947,6 +1054,94 @@
                     <div class="layer-card">
                         <h3><span class="license commercial">商业</span> 企业套件</h3>
                         <p>围绕合规交付、规模化运维与行业方案的增值能力建设中；路线图与获取方式将随模块成熟逐步公开。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demos-section" id="demos">
+            <div class="container">
+                <h2 class="section-title">Demo 演示区</h2>
+                <p class="section-lead">直接跑起来体验“长连接 + 房间协作 + 快照同步”。每个 Demo 都是可复制的最小闭环，适合做原型与验证。</p>
+
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-media">
+                            <img loading="lazy" src="/docs/promo/assets/collab-whiteboard-demo.gif" alt="collab_whiteboard_demo preview">
+                        </div>
+                        <div class="demo-body">
+                            <div class="demo-title">
+                                <h3>协作白板</h3>
+                                <span class="demo-tag">collab_whiteboard_demo</span>
+                            </div>
+                            <p class="demo-desc">同房间实时广播；新加入/重连秒级快照同步；清空事件全员一致。服务端一个 <code>main.go</code> 跑通协作模型。</p>
+                            <div class="demo-cmd">go run ./examples/collab_whiteboard_demo -conn ws -addr 127.0.0.1:8011</div>
+                            <div class="demo-actions">
+                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/collab_whiteboard_demo">源码 →</a>
+                                <a href="https://juejin.cn/post/7626399278428913690/" target="_blank" rel="noopener">掘金文章 →</a>
+                                <a href="https://zhuanlan.zhihu.com/p/2025717533785821827" target="_blank" rel="noopener">知乎文章 →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-media">
+                            <div style="padding:20px;color:var(--text-muted);font-family:'JetBrains Mono', monospace;font-size:0.85rem;text-align:center">
+                                MMO Web Demo<br/>AOI + 同步 + 战斗
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="demo-title">
+                                <h3>MMO Web Demo</h3>
+                                <span class="demo-tag">mmo_web_demo</span>
+                            </div>
+                            <p class="demo-desc">浏览器多人同屏：位置同步、AOI 过滤广播、近战攻击/冷却/重生；示例自带静态页面服务，不依赖 Python。</p>
+                            <div class="demo-cmd">go run ./examples/mmo_web_demo -conn ws -addr 127.0.0.1:8001</div>
+                            <div class="demo-actions">
+                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/mmo_web_demo">源码 →</a>
+                                <a href="https://github.com/aiyang-zh/zhenyi/blob/main/examples/mmo_web_demo/README.md">运行说明 →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-media">
+                            <div style="padding:20px;color:var(--text-muted);font-family:'JetBrains Mono', monospace;font-size:0.85rem;text-align:center">
+                                IM Single Demo<br/>Gate + Actor
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="demo-title">
+                                <h3>IM 单机 Demo</h3>
+                                <span class="demo-tag">im_single_demo</span>
+                            </div>
+                            <p class="demo-desc">单进程 Gate + 业务 Actor 的最小聊天室路径，适合快速验证消息链路、路由与性能调参。</p>
+                            <div class="demo-cmd">go run ./examples/im_single_demo</div>
+                            <div class="demo-actions">
+                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/im_single_demo">源码 →</a>
+                                <a href="https://github.com/aiyang-zh/zhenyi/blob/main/docs/EXAMPLES.md">更多示例 →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-card">
+                        <div class="demo-media">
+                            <div style="padding:20px;color:var(--text-muted);font-family:'JetBrains Mono', monospace;font-size:0.85rem;text-align:center">
+                                Echo Demo<br/>最小闭环
+                            </div>
+                        </div>
+                        <div class="demo-body">
+                            <div class="demo-title">
+                                <h3>Echo 最小闭环</h3>
+                                <span class="demo-tag">echo_demo</span>
+                            </div>
+                            <p class="demo-desc">最小可运行示例：Gate 接入 + 业务 Actor 收发一条消息。适合 5 分钟跑通环境与调用链。</p>
+                            <div class="demo-cmd">go run ./examples/echo_demo -conn tcp -addr 127.0.0.1:8021</div>
+                            <div class="demo-actions">
+                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/echo_demo">源码 →</a>
+                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/echo_client">配套客户端 →</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@
 | 文章 | 说明 |
 |------|------|
 | [首发推广.md](首发推广.md) | zhenyi 生态开源首发 |
+| [collab-whiteboard-demo.md](collab-whiteboard-demo.md) | 一个 main.go 搞定协作白板：你画一笔，全世界都看见 |
 
 ## zhenyi-base 基础库
 
