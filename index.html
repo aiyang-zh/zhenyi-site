@@ -794,6 +794,34 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            cursor: zoom-in;
+        }
+
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+            padding: 24px;
+        }
+
+        .image-lightbox.open {
+            display: flex;
+        }
+
+        .image-lightbox img {
+            max-width: min(1200px, 92vw);
+            max-height: 88vh;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 14px 48px rgba(0, 0, 0, 0.45);
+            cursor: zoom-out;
+            background: #0d1117;
         }
 
         .demo-body {
@@ -1078,17 +1106,13 @@
                             <div class="demo-cmd">go run ./examples/collab_whiteboard_demo -conn ws -addr 127.0.0.1:8011</div>
                             <div class="demo-actions">
                                 <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/collab_whiteboard_demo">源码 →</a>
-                                <a href="https://juejin.cn/post/7626399278428913690/" target="_blank" rel="noopener">掘金文章 →</a>
-                                <a href="https://zhuanlan.zhihu.com/p/2025717533785821827" target="_blank" rel="noopener">知乎文章 →</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="demo-card">
                         <div class="demo-media">
-                            <div style="padding:20px;color:var(--text-muted);font-family:'JetBrains Mono', monospace;font-size:0.85rem;text-align:center">
-                                MMO Web Demo<br/>AOI + 同步 + 战斗
-                            </div>
+                            <img loading="lazy" src="/docs/promo/assets/mmo_demo.gif" alt="mmo_web_demo preview">
                         </div>
                         <div class="demo-body">
                             <div class="demo-title">
@@ -1099,7 +1123,6 @@
                             <div class="demo-cmd">go run ./examples/mmo_web_demo -conn ws -addr 127.0.0.1:8001</div>
                             <div class="demo-actions">
                                 <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/mmo_web_demo">源码 →</a>
-                                <a href="https://github.com/aiyang-zh/zhenyi/blob/main/examples/mmo_web_demo/README.md">运行说明 →</a>
                             </div>
                         </div>
                     </div>
@@ -1119,7 +1142,6 @@
                             <div class="demo-cmd">go run ./examples/im_single_demo</div>
                             <div class="demo-actions">
                                 <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/im_single_demo">源码 →</a>
-                                <a href="https://github.com/aiyang-zh/zhenyi/blob/main/docs/EXAMPLES.md">更多示例 →</a>
                             </div>
                         </div>
                     </div>
@@ -1139,7 +1161,6 @@
                             <div class="demo-cmd">go run ./examples/echo_demo -conn tcp -addr 127.0.0.1:8021</div>
                             <div class="demo-actions">
                                 <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/echo_demo">源码 →</a>
-                                <a href="https://github.com/aiyang-zh/zhenyi/tree/main/examples/echo_client">配套客户端 →</a>
                             </div>
                         </div>
                     </div>
@@ -1192,6 +1213,36 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
+        var lightbox = document.createElement("div");
+        lightbox.className = "image-lightbox";
+        lightbox.setAttribute("aria-hidden", "true");
+        lightbox.innerHTML = '<img alt="demo preview enlarged">';
+        document.body.appendChild(lightbox);
+
+        var lightboxImg = lightbox.querySelector("img");
+        document.querySelectorAll(".demo-media img").forEach(function(img) {
+            img.addEventListener("click", function() {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt || "demo preview enlarged";
+                lightbox.classList.add("open");
+                lightbox.setAttribute("aria-hidden", "false");
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove("open");
+            lightbox.setAttribute("aria-hidden", "true");
+            lightboxImg.removeAttribute("src");
+        }
+
+        lightbox.addEventListener("click", function(e) {
+            if (e.target === lightbox || e.target === lightboxImg) closeLightbox();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+        });
+
         var bg = document.getElementById("bgParallax");
         if (bg && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             document.addEventListener("mousemove", function(e) {
@@ -1202,6 +1253,7 @@
         }
         document.addEventListener("click", function(e) {
             if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            if (e.target.closest(".image-lightbox") || e.target.closest(".demo-media img")) return;
             var b = document.createElement("div");
             b.className = "click-burst";
             b.style.left = e.clientX + "px";
